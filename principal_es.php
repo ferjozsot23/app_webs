@@ -1,5 +1,17 @@
 <?php
 
+if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
+         $url = "https://";   
+    else  
+         $url = "http://";   
+    // Append the host(domain name, ip) to the URL.   
+    $url.= $_SERVER['HTTP_HOST'];   
+
+    $url.= dirname($_SERVER['REQUEST_URI']);    
+      
+    $url_index = $url . "/index.php"; 
+
+
 // Va en la cabecera
 session_start();
 
@@ -18,7 +30,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 
 
 
-if ($_SERVER["HTTP_REFERER"] == "http://localhost/t1_fernando_soto/index.php") {
+if ($_SERVER["HTTP_REFERER"] == $url_index) {
     if (!empty($_POST["recordar"])) {
         setcookie("c_username", $_POST["username"], time() + (24 * 3600)); // 3600 = 1 hora Experición
         setcookie("c_password", $_POST["password"], time() + (24 * 3600)); // 3600 = 1 hora Experición
